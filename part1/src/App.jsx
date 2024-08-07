@@ -7,13 +7,20 @@ const Header = ({ course }) => {
   )
 }
 
+//Part component
+const Part = ({name, exercises}) => {
+  return (
+    <p>{name} = {exercises}</p>
+  )
+}
+
 //Content component
 const Content = ({ part1, exercises1, part2, exercises2, part3, exercises3}) =>{
     return(
       <div>
-        <p>{part1} have {exercises1} exercises</p>
-        <p>{part2} have {exercises2} exercises</p>
-        <p>{part3} have {exercises3} exercises</p>
+        <Part name={part1} exercises={exercises1}/>
+        <Part name={part2} exercises={exercises2}/>
+        <Part name={part3} exercises={exercises3}/>
       </div>
     )
 }
