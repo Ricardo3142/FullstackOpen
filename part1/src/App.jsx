@@ -14,20 +14,22 @@ const Part = ({name, exercises}) => {
   )
 }
 
+//The index is necessary because React requires that each element in a list have a unique key
 //Content component
-const Content = ({ part1, exercises1, part2, exercises2, part3, exercises3}) =>{
+const Content = ({ parts}) =>{
     return(
       <div>
-        <Part name={part1} exercises={exercises1}/>
-        <Part name={part2} exercises={exercises2}/>
-        <Part name={part3} exercises={exercises3}/>
+        {parts.map((part, index) =>(
+          <Part key = {index} name={part.name} exercises={part.exercises}/>
+        ))}
       </div>
     )
 }
 
-const Total = ({total}) => {
+const Total = ({parts}) => {
+  const totalExercises = parts.reduce((sum, part) => sum + part.exercises, 0);
   return(
-    <p>Number of exercises = {total}</p>
+    <p>Number of exercises = {totalExercises}</p>
   )
 }
 
@@ -35,31 +37,28 @@ const Total = ({total}) => {
 const App = () => {
 
   const course = 'Half Stack application development'
-  
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
 
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
-  }
-
-  const totalExercises = part1.exercises + part2.exercises + part3.exercises;
 
   return (
     <div>
-      <Header course = {course}/>
-      <p>{part1.name} = {part1.exercises}</p>
-      <p>{part2.name} = {part2.exercises}</p>
-      <p>{part3.name} = {part3.exercises}</p>
-      <Total total={totalExercises}/>
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
